@@ -2,15 +2,15 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Magaret_Dayhoff_socringMatrix {
-    String[] scoringSource;
-    int sourceDepth;
-    char[] syllabus;  //elements in this array need to be sorted in order of English alphabet
+    private String[] scoringSource;
+    private int sourceDepth;
+    private char[] syllabus;  //elements in this array need to be sorted in order of English alphabet
 
     //the three arrays below contains data in order of English alphabet
-    float[] observedFreq;
-    float[] expectedFreq;
-    float[] presentFreq;
-    float[] logLokelyhood_ratio;
+    private float[] observedFreq;
+    private float[] expectedFreq;
+    private float[] presentFreq;
+    private float[] logLokelyhood_ratio;
 
 
     public Magaret_Dayhoff_socringMatrix(String type){
@@ -20,6 +20,10 @@ public class Magaret_Dayhoff_socringMatrix {
         }
     }
 
+    /**
+     * defult constructor for homework
+     * @param sourceDepth
+     */
     public Magaret_Dayhoff_socringMatrix(int sourceDepth){
         this.sourceDepth=sourceDepth;
         scoringSource=new String[sourceDepth];
@@ -46,12 +50,20 @@ public class Magaret_Dayhoff_socringMatrix {
             System.out.println("All inputs are accepted, object constructed");
         }
     }
+
+    /**
+     * the main method for matrix calculation
+     */
     public void scoringMatrix_calculation(){
         presentFreq();
         expectFreq();
         observedFreq();
         logLikelyhood_ratio();
     }
+
+    /**
+     * presented frequency calculation
+     */
     private void presentFreq(){
         for(int i=0;i<syllabus.length;i++){
             char character=syllabus[i];
@@ -63,12 +75,20 @@ public class Magaret_Dayhoff_socringMatrix {
             presentFreq[i]=tempCount/(scoringSource.length*scoringSource[0].length());
         }
     }
+
+    /**
+     * expected frequency calculation
+     */
     private void expectFreq(){
         for(int i=0;i<syllabus.length;i++)
             for(int j=i;j<syllabus.length;j++){
                 expectedFreq[i+j]=presentFreq[i]*presentFreq[j];
             }
     }
+
+    /**
+     * observed frequency calculation
+     */
     private void observedFreq(){
         //int[] tempCount=new int[expectedFreq.length];
         for(int m=0;m<syllabus.length;m++)
@@ -83,6 +103,10 @@ public class Magaret_Dayhoff_socringMatrix {
                 observedFreq[m+n]=tempCount;
             }
     }
+
+    /**
+     * log likelihood ratio calculation
+     */
     private void logLikelyhood_ratio(){
         for(int i=0;i<logLokelyhood_ratio.length;i++){
             logLokelyhood_ratio[i]=(float)(2*(Math.log(observedFreq[i]/expectedFreq[i])));
