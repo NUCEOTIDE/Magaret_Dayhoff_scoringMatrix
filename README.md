@@ -1,0 +1,1 @@
+# Magaret_Dayhoff_scoringMatrix
