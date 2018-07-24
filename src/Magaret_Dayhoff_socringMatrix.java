@@ -29,11 +29,14 @@ public class Magaret_Dayhoff_socringMatrix {
         scoringSource=new String[sourceDepth];
         Scanner s=new Scanner(System.in);
         try{
-            System.out.println("Please input syllabus: (separate them with space, end inputting with enter)");
+            System.out.println("Please input syllabus: (End inputting with enter)");
             String rawSyllabus=s.nextLine();
             rawSyllabus.replaceAll(" ","");
+            //System.out.println(rawSyllabus);
+            System.out.println("rawSyllabus length:"+rawSyllabus.length());
             syllabus=new char[rawSyllabus.length()];
-            for(int i=0;i<rawSyllabus.length();i++){
+            //System.out.println(syllabus.length);
+            for(int i=0;i<syllabus.length;i++){
                 syllabus[i]=rawSyllabus.charAt(i);
             }
             System.out.println("Please input source: (separate them with enter)");
@@ -65,6 +68,7 @@ public class Magaret_Dayhoff_socringMatrix {
      * presented frequency calculation
      */
     private void presentFreq(){
+        int denomiator=scoringSource.length*scoringSource[0].length();
         for(int i=0;i<syllabus.length;i++){
             char character=syllabus[i];
             int tempCount=0;
@@ -72,7 +76,7 @@ public class Magaret_Dayhoff_socringMatrix {
                 for(int m=0;m<scoringSource[0].length();m++){
                     if(scoringSource[k].charAt(m)==character) tempCount++;
                 }
-            presentFreq[i]=tempCount/(scoringSource.length*scoringSource[0].length());
+            presentFreq[i]=(float)tempCount/denomiator;
         }
     }
 
@@ -100,6 +104,7 @@ public class Magaret_Dayhoff_socringMatrix {
                             if(scoringSource[i].charAt(j)==syllabus[m]&&scoringSource[k].charAt(j)==syllabus[n])
                                 tempCount++;
                         }
+                //System.out.println(tempCount);
                 observedFreq[m+n]=tempCount;
             }
     }
@@ -110,7 +115,42 @@ public class Magaret_Dayhoff_socringMatrix {
     private void logLikelyhood_ratio(){
         for(int i=0;i<logLokelyhood_ratio.length;i++){
             logLokelyhood_ratio[i]=(float)(2*(Math.log(observedFreq[i]/expectedFreq[i])));
-            System.out.println(logLokelyhood_ratio[i]);
+            //System.out.println(logLokelyhood_ratio[i]);
         }
     }
+
+    /**
+     * get methods
+     */
+    public void get(String type){
+        switch (type){
+            case "ObsFreq":{
+                System.out.println("Observed Freq:");
+                for(int i=0;i<observedFreq.length;i++)
+                    System.out.println(observedFreq[i]);
+                break;
+            }
+            case "ExpFreq":{
+                System.out.println("Expected Freq:");
+                for(int i=0;i<expectedFreq.length;i++)
+                    System.out.println(expectedFreq[i]);
+                break;
+            }
+            case "PresFreq":{
+                System.out.println("Present Freq:");
+                for(int i=0;i<presentFreq.length;i++)
+                    System.out.println(presentFreq[i]);
+                break;
+            }
+            case "syllabus":
+                for(int i=0;i<syllabus.length;i++) System.out.print(syllabus[i]);
+                System.out.println();
+                break;
+            case "source":
+                for(int i=0;i<scoringSource.length;i++) System.out.println(scoringSource[i]);
+                break;
+        }
+
+    }
+
 }
