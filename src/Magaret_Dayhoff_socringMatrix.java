@@ -84,9 +84,11 @@ public class Magaret_Dayhoff_socringMatrix {
      * expected frequency calculation
      */
     private void expectFreq(){
+        int temp=0;
         for(int i=0;i<syllabus.length;i++)
             for(int j=i;j<syllabus.length;j++){
-                expectedFreq[i+j]=presentFreq[i]*presentFreq[j];
+                expectedFreq[temp]=presentFreq[i]*presentFreq[j];
+                temp++;
             }
     }
 
@@ -95,17 +97,21 @@ public class Magaret_Dayhoff_socringMatrix {
      */
     private void observedFreq(){
         //int[] tempCount=new int[expectedFreq.length];
+        int tempPos=0;
         for(int m=0;m<syllabus.length;m++)
             for(int n=m;n<syllabus.length;n++){
+
                 int tempCount=0;
                 for(int i=0;i<scoringSource.length;i++)
                     for(int j=0;j<scoringSource[0].length();j++)
-                        for(int k=i;k<scoringSource.length;k++){
-                            if(scoringSource[i].charAt(j)==syllabus[m]&&scoringSource[k].charAt(j)==syllabus[n])
+                        for(int k=i+1;k<scoringSource.length;k++){
+                            if(scoringSource[i].charAt(j)==syllabus[m]&&scoringSource[k].charAt(j)==syllabus[n]
+                                    ||scoringSource[i].charAt(j)==syllabus[n]&&scoringSource[k].charAt(j)==syllabus[m])
                                 tempCount++;
                         }
                 //System.out.println(tempCount);
-                observedFreq[m+n]=tempCount;
+                observedFreq[tempPos]=tempCount;
+                tempPos++;
             }
     }
 
@@ -142,13 +148,20 @@ public class Magaret_Dayhoff_socringMatrix {
                     System.out.println(presentFreq[i]);
                 break;
             }
-            case "syllabus":
+            case "syllabus":{
                 for(int i=0;i<syllabus.length;i++) System.out.print(syllabus[i]);
                 System.out.println();
                 break;
-            case "source":
+            }
+            case "source":{
                 for(int i=0;i<scoringSource.length;i++) System.out.println(scoringSource[i]);
                 break;
+            }
+            case "likelihood":{
+                System.out.println("Loglikelihood_ratio");
+                for(int i=0;i<logLokelyhood_ratio.length;i++) System.out.println(logLokelyhood_ratio[i]);
+                break;
+            }
         }
 
     }
