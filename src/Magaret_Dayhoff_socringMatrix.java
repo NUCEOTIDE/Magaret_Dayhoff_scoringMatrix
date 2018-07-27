@@ -87,7 +87,9 @@ public class Magaret_Dayhoff_socringMatrix {
         int temp=0;
         for(int i=0;i<syllabus.length;i++)
             for(int j=i;j<syllabus.length;j++){
-                expectedFreq[temp]=presentFreq[i]*presentFreq[j];
+                if(syllabus[i]==syllabus[j])
+                    expectedFreq[temp]=presentFreq[i]*presentFreq[j];
+                else expectedFreq[temp]=2*presentFreq[i]*presentFreq[j];
                 temp++;
             }
     }
@@ -120,7 +122,7 @@ public class Magaret_Dayhoff_socringMatrix {
      */
     private void logLikelyhood_ratio(){
         for(int i=0;i<logLokelyhood_ratio.length;i++){
-            logLokelyhood_ratio[i]=(float)(2*(Math.log(observedFreq[i]/expectedFreq[i])));
+            logLokelyhood_ratio[i]=(float)(2*((float)Math.log(observedFreq[i]/expectedFreq[i])/Math.log((float)2)));
             //System.out.println(logLokelyhood_ratio[i]);
         }
     }
